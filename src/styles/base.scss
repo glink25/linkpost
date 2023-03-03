@@ -1,0 +1,63 @@
+@import '@unocss/reset/tailwind.css';
+
+* {
+  // 阻止移动端safari双击缩放
+  touch-action: manipulation;
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(158, 154, 154, 0.2);
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 4px;
+  }
+}
+
+html {
+  overflow: hidden;
+}
+
+body {
+  width: 100vw;
+  height: var(--actVh);
+  -webkit-tap-highlight-color: transparent;
+  @apply bg-zinc-100;
+}
+
+#app {
+  @apply w-full h-full flex flex-col items-center
+}
+
+.place-center {
+  @apply items-center justify-center
+}
+
+.primary-button {
+  @apply transition-all rounded px-2 py-1 bg-stone-900 font-bold text-white hover:(bg-stone-800) active:(bg-stone-900) disabled:(bg-stone-200)
+}
+
+.normal-button {
+  @apply transition-all rounded px-2 py-1 hover:(bg-stone-200) active:(bg-stone-300)
+}
+
+
+.icon {
+  &.icon-base {
+    @apply w-6 h-6;
+  }
+
+  &-button {
+    @apply transition-all p-2 rounded-full hover:(bg-stone-200) active:(bg-stone-300)
+  }
+
+  &-contrast-button {
+    @apply transition-all p-2 rounded-full hover:(bg-stone-100) active:(bg-stone-50);
+  }
+}

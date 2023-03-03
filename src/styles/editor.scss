@@ -1,0 +1,12 @@
+.vditor{
+    border: none;
+    height: 100% !important;
+    @apply bg-transparent;
+    &-toolbar{
+        border: none;
+        @apply shadow;
+    }
+    .vditor-reset{
+        background: transparent !important;
+    }
+}
