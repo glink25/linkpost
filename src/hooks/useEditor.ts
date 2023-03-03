@@ -1,9 +1,13 @@
-import { onMounted, ref, Ref } from "vue";
+import { onMounted, ref, Ref, watchEffect } from "vue";
 import Vditor from 'vditor'
 import "vditor/src/assets/less/index.less"
+import { useInitialInfo } from "./useInitialInfo";
+import { Base64 } from "js-base64";
 
 export const useEditor = (elRef: Ref<HTMLElement | undefined>) => {
     const value = ref('')
+
+    const { initialContent } = useInitialInfo()
 
 
     const assetsSite = (() => {
@@ -20,6 +24,12 @@ export const useEditor = (elRef: Ref<HTMLElement | undefined>) => {
             placeholder: 'Type here',
             input: (text) => {
                 value.value = text
+            }
+        })
+        watchEffect(async () => {
+            if (initialContent.value) {
+                const text = Base64.decode(initialContent.value.content)
+                editor.setValue(text)
             }
         })
     })

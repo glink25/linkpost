@@ -21,7 +21,11 @@ export const fetchGithubUser = async () => {
     return data
 }
 
-type UploadParam = { user: string, repo: string, name: string, content: string, message: string }
-export const postFileToGithub = async ({ user, repo, name, content, message }: UploadParam) => {
-    await request(`https://api.github.com/repos/${user}/${repo}/contents/${name}`, { method: 'put', body: JSON.stringify({ content, message }) })
+type UploadParam = { user: string, repo: string, path: string, content: string, message: string, sha?: string }
+export const postFileToGithub = async ({ user, repo, path, content, message, sha }: UploadParam) => {
+    await request(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, { method: 'put', body: JSON.stringify({ content, message, sha }) })
 }
+
+export type GithubFileInfo = { sha: string, content: string, name: string, path: string }
+type InfoParam = { user: string, repo: string, path: string }
+export const fetchGithubFileInfo = async ({ user, repo, path }: InfoParam) => request<GithubFileInfo>(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, { method: 'get' })
