@@ -1,8 +1,9 @@
 import { onMounted, ref, Ref, watchEffect } from "vue";
-import Vditor from 'vditor'
-import "vditor/src/assets/less/index.less"
+import Vditor from '@glink25/vditor'
+import "@glink25/vditor/src/assets/less/index.less"
 import { useInitialInfo } from "./useInitialInfo";
 import { Base64 } from "js-base64";
+import { LocalAssetsServer } from "@/utils/localAssetsServer";
 
 export const useEditor = (elRef: Ref<HTMLElement | undefined>) => {
     const value = ref('')
@@ -20,11 +21,15 @@ export const useEditor = (elRef: Ref<HTMLElement | undefined>) => {
         if (!elRef.value) return;
         editor = new Vditor(elRef.value, {
             cache: { enable: false },
-            upload: { url: assetsSite },
+            upload: {
+                processor: (_, files) => {
+                    return LocalAssetsServer.handler(files)
+                },
+            },
             placeholder: 'Type here',
             input: (text) => {
                 value.value = text
-            }
+            },
         })
         watchEffect(async () => {
             if (initialContent.value) {
